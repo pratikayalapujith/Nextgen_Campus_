@@ -1,0 +1,403 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    /* Loyola-inspired deep institutional blue/white */
+    --background: 210 25% 97%;
+    --foreground: 215 50% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 50% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 50% 10%;
+
+    /* Deep navy — like Loyola's green but in blue */
+    --primary: 215 65% 18%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Vivid royal blue accent */
+    --secondary: 215 90% 50%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Gold accent like institutional crest */
+    --accent: 42 95% 55%;
+    --accent-foreground: 215 50% 10%;
+
+    --muted: 215 20% 93%;
+    --muted-foreground: 215 15% 50%;
+
+    --destructive: 0 80% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 155 70% 38%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 42 95% 55%;
+    --warning-foreground: 215 50% 10%;
+
+    --border: 215 25% 88%;
+    --input: 215 25% 88%;
+    --ring: 215 65% 18%;
+
+    --radius: 0.625rem;
+
+    /* Sidebar — deep navy with subtle texture feel */
+    --sidebar-bg: 215 65% 12%;
+    --sidebar-fg: 215 20% 80%;
+    --sidebar-active: 215 90% 50%;
+    --sidebar-hover: 215 55% 18%;
+
+    /* Rich gradients */
+    --gradient-primary: linear-gradient(145deg, hsl(215, 65%, 18%), hsl(215, 70%, 28%));
+    --gradient-hero: linear-gradient(135deg, hsl(215, 65%, 12%) 0%, hsl(215, 55%, 22%) 50%, hsl(215, 45%, 30%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(42, 95%, 55%), hsl(36, 90%, 50%));
+    --gradient-royal: linear-gradient(135deg, hsl(215, 90%, 45%), hsl(215, 85%, 55%));
+    --gradient-success: linear-gradient(135deg, hsl(155, 70%, 38%), hsl(160, 65%, 42%));
+    --gradient-danger: linear-gradient(135deg, hsl(0, 80%, 55%), hsl(5, 75%, 50%));
+    --gradient-sidebar: linear-gradient(180deg, hsl(215, 65%, 14%) 0%, hsl(215, 60%, 10%) 100%);
+    --gradient-login: linear-gradient(135deg, hsl(215, 65%, 10%) 0%, hsl(215, 55%, 18%) 40%, hsl(215, 45%, 25%) 100%);
+
+    /* Dramatic shadows */
+    --shadow-card: 0 1px 3px hsl(215 65% 18% / 0.05), 0 4px 12px hsl(215 65% 18% / 0.08);
+    --shadow-card-hover: 0 8px 30px hsl(215 65% 18% / 0.15), 0 4px 12px hsl(215 65% 18% / 0.1);
+    --shadow-elevated: 0 12px 40px hsl(215 65% 18% / 0.2);
+    --shadow-modal: 0 25px 60px -12px hsl(215 65% 18% / 0.35);
+    --shadow-glow-blue: 0 0 20px hsl(215 90% 50% / 0.3), 0 0 40px hsl(215 90% 50% / 0.1);
+    --shadow-glow-gold: 0 0 20px hsl(42 95% 55% / 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  /* === STAT CARDS — Bold institutional style === */
+  .stat-card {
+    @apply bg-card rounded-xl relative overflow-hidden transition-all duration-300;
+    box-shadow: var(--shadow-card);
+    border: 1px solid hsl(var(--border));
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+  }
+  .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+  }
+  .stat-card-border-blue::before { background: var(--gradient-royal); }
+  .stat-card-border-green::before { background: var(--gradient-success); }
+  .stat-card-border-purple::before { background: linear-gradient(135deg, hsl(265, 65%, 50%), hsl(280, 60%, 55%)); }
+  .stat-card-border-orange::before { background: var(--gradient-accent); }
+
+  .stat-card .stat-icon {
+    @apply w-12 h-12 rounded-xl flex items-center justify-center;
+    background: hsl(var(--secondary) / 0.08);
+  }
+  .stat-card .stat-value {
+    @apply font-heading font-extrabold text-4xl tracking-tight;
+    color: hsl(var(--foreground));
+  }
+  .stat-card .stat-label {
+    @apply text-sm font-medium mt-1;
+    color: hsl(var(--muted-foreground));
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.7rem;
+  }
+
+  /* === DATA TABLES — Premium institutional === */
+  .data-table {
+    @apply w-full bg-card rounded-xl overflow-hidden;
+    box-shadow: var(--shadow-card);
+    border: 1px solid hsl(var(--border));
+  }
+  .data-table thead {
+    background: hsl(var(--primary));
+  }
+  .data-table th {
+    @apply px-5 py-3.5 text-left text-xs font-bold uppercase tracking-wider;
+    color: hsl(var(--primary-foreground));
+    font-family: var(--font-heading);
+    letter-spacing: 0.08em;
+  }
+  .data-table td { @apply px-5 py-4 text-sm; }
+  .data-table tbody tr {
+    @apply border-t transition-all duration-150;
+    border-color: hsl(var(--border) / 0.6);
+  }
+  .data-table tbody tr:hover {
+    background: hsl(var(--secondary) / 0.04);
+  }
+
+  /* === BADGES — Pill style, bold === */
+  .badge {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-bold;
+    letter-spacing: 0.02em;
+  }
+  .badge-blue {
+    background: hsl(215 90% 50% / 0.12);
+    color: hsl(215, 90%, 45%);
+  }
+  .badge-green {
+    background: hsl(155 70% 38% / 0.12);
+    color: hsl(155, 70%, 35%);
+  }
+  .badge-red {
+    background: hsl(0 80% 55% / 0.12);
+    color: hsl(0, 80%, 50%);
+  }
+  .badge-yellow {
+    background: hsl(42 95% 55% / 0.15);
+    color: hsl(36, 80%, 40%);
+  }
+  .badge-purple {
+    background: hsl(265 65% 50% / 0.12);
+    color: hsl(265, 65%, 45%);
+  }
+  .badge-gray {
+    background: hsl(var(--muted));
+    color: hsl(var(--muted-foreground));
+  }
+  .badge-orange {
+    background: hsl(25 90% 50% / 0.12);
+    color: hsl(25, 90%, 45%);
+  }
+
+  /* === BUTTONS — Bold gradient with glow === */
+  .btn-primary {
+    @apply px-5 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 cursor-pointer;
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 4px 15px hsl(215 65% 18% / 0.35);
+    font-family: var(--font-heading);
+    letter-spacing: 0.02em;
+    border: none;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px hsl(215 65% 18% / 0.45);
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  .btn-success {
+    @apply px-5 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 cursor-pointer;
+    background: var(--gradient-success);
+    color: white;
+    box-shadow: 0 4px 15px hsl(155 70% 38% / 0.35);
+    font-family: var(--font-heading);
+    border: none;
+  }
+  .btn-success:hover { transform: translateY(-2px); box-shadow: 0 8px 25px hsl(155 70% 38% / 0.4); }
+
+  .btn-danger {
+    @apply px-5 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 cursor-pointer;
+    background: var(--gradient-danger);
+    color: white;
+    box-shadow: 0 4px 15px hsl(0 80% 55% / 0.35);
+    font-family: var(--font-heading);
+    border: none;
+  }
+  .btn-danger:hover { transform: translateY(-2px); }
+
+  .btn-outline {
+    @apply px-5 py-2.5 rounded-lg font-bold text-sm border-2 bg-transparent transition-all duration-200 cursor-pointer;
+    border-color: hsl(var(--primary));
+    color: hsl(var(--primary));
+    font-family: var(--font-heading);
+  }
+  .btn-outline:hover {
+    background: hsl(var(--primary));
+    color: white;
+  }
+
+  .btn-royal {
+    @apply px-5 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 cursor-pointer;
+    background: var(--gradient-royal);
+    color: white;
+    box-shadow: var(--shadow-glow-blue);
+    font-family: var(--font-heading);
+    border: none;
+  }
+  .btn-royal:hover { transform: translateY(-2px); box-shadow: 0 0 30px hsl(215 90% 50% / 0.4); }
+
+  /* === FORM INPUTS — Premium feel === */
+  .form-input {
+    @apply w-full px-4 py-3 rounded-lg text-sm transition-all duration-200 bg-card;
+    border: 2px solid hsl(var(--border));
+    font-family: var(--font-body);
+    color: hsl(var(--foreground));
+  }
+  .form-input::placeholder {
+    color: hsl(var(--muted-foreground));
+  }
+  .form-input:hover {
+    border-color: hsl(var(--muted-foreground) / 0.5);
+  }
+  .form-input:focus {
+    @apply outline-none;
+    border-color: hsl(var(--secondary));
+    box-shadow: 0 0 0 4px hsl(var(--secondary) / 0.1);
+  }
+
+  .form-select {
+    @apply form-input cursor-pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+  }
+
+  /* === PAGE ANIMATION === */
+  .page-fade-in {
+    animation: pageFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* === MODAL — Premium overlay === */
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center;
+    background: hsl(215 65% 10% / 0.7);
+    backdrop-filter: blur(8px);
+  }
+  .modal-content {
+    @apply bg-card rounded-2xl w-full max-w-lg mx-4 overflow-hidden;
+    box-shadow: var(--shadow-modal);
+    animation: modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* === TIMETABLE CARDS — Interactive with glow === */
+  .timetable-card {
+    @apply bg-card rounded-xl p-5 transition-all duration-300 cursor-pointer relative overflow-hidden;
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-card);
+  }
+  .timetable-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-royal);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .timetable-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: hsl(var(--secondary) / 0.3);
+  }
+  .timetable-card:hover::after { opacity: 1; }
+
+  /* === SECTION HEADER — Institutional style === */
+  .section-header {
+    @apply flex items-center gap-3 mb-6;
+  }
+  .section-header h2 {
+    @apply font-heading font-extrabold text-2xl tracking-tight;
+    color: hsl(var(--foreground));
+  }
+  .section-header .header-accent {
+    width: 4px;
+    height: 28px;
+    background: var(--gradient-royal);
+    border-radius: 2px;
+  }
+
+  /* === INFO BANNER — Bold institutional === */
+  .info-banner {
+    @apply rounded-xl p-6 relative overflow-hidden;
+    background: var(--gradient-hero);
+    color: white;
+  }
+  .info-banner::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: hsl(215 90% 50% / 0.1);
+  }
+  .info-banner h2 {
+    @apply font-heading font-extrabold text-3xl mb-2 relative z-10;
+  }
+  .info-banner p {
+    @apply text-sm relative z-10;
+    color: hsl(215 20% 80%);
+  }
+
+  /* === PROGRESS BAR — Institutional === */
+  .progress-track {
+    @apply w-full h-2.5 rounded-full overflow-hidden;
+    background: hsl(var(--muted));
+  }
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-700 ease-out;
+  }
+}
+
+/* === ANIMATIONS === */
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 50%, 90% { transform: translateX(-5px); }
+  30%, 70% { transform: translateX(5px); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-25px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 15px hsl(215 90% 50% / 0.2); }
+  50% { box-shadow: 0 0 30px hsl(215 90% 50% / 0.4); }
+}
+
+.shake { animation: shake 0.5s ease-in-out; }
+.float-slow { animation: float 8s ease-in-out infinite; }
+.float-slower { animation: float 10s ease-in-out infinite 1.5s; }
+.pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
