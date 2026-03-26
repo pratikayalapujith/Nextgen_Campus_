@@ -1,7 +1,20 @@
+from flask import jsonify
 from app import create_app
 from app.extensions import db
 
 app = create_app()
+
+
+@app.route('/')
+def health_check():
+    """Health check endpoint for UptimeRobot and other monitors."""
+    return jsonify(status='ok', service='NextGen Campus API'), 200
+
+
+@app.route('/api/health')
+def api_health():
+    """API health check endpoint."""
+    return jsonify(status='ok', service='NextGen Campus API'), 200
 
 
 @app.cli.command('seed')
