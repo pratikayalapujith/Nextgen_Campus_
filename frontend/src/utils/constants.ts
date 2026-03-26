@@ -1,7 +1,7 @@
 export const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 export const DAY_SHORT = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
-export const API_BASE = 'http://127.0.0.1:5001/api';
+export const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5001/api';
 
 export const CATEGORY_COLORS: Record<string, string> = {
   general: 'badge-blue',
