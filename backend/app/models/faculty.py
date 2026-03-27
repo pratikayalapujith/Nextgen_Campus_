@@ -16,8 +16,8 @@ class Faculty(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    subjects = db.relationship('Subject', backref='faculty', lazy='dynamic')
-    timetable_entries = db.relationship('TimetableEntry', backref='faculty', lazy='dynamic')
+    subjects = db.relationship('Subject', backref='faculty', lazy='dynamic', cascade='all, delete-orphan')
+    timetable_entries = db.relationship('TimetableEntry', backref='faculty', lazy='dynamic', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {

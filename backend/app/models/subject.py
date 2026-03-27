@@ -14,7 +14,7 @@ class Subject(db.Model):
     faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    timetable_entries = db.relationship('TimetableEntry', backref='subject', lazy='dynamic')
+    timetable_entries = db.relationship('TimetableEntry', backref='subject', lazy='dynamic', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {

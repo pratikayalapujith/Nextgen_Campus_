@@ -19,7 +19,7 @@ class Student(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    attendance_records = db.relationship('AttendanceRecord', backref='student', lazy='dynamic')
+    attendance_records = db.relationship('AttendanceRecord', backref='student', lazy='dynamic', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {

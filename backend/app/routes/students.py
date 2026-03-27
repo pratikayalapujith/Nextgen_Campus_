@@ -143,6 +143,10 @@ def update_student(student_id):
 def delete_student(student_id):
     student = Student.query.get_or_404(student_id)
     user = student.user
-    db.session.delete(user)  # cascades to student
-    db.session.commit()
-    return jsonify(message='Student deleted successfully')
+    try:
+        db.session.delete(user)  # cascades to student + attendance
+        db.session.commit()
+        return jsonify(message='Student deleted successfully')
+    except Exception as e:
+        db.session.rollback()
+        return jsonify(error=f'Failed to delete student: {str(e)}'), 500

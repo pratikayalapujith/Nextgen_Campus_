@@ -123,6 +123,10 @@ def update_faculty(faculty_id):
 def delete_faculty(faculty_id):
     fac = Faculty.query.get_or_404(faculty_id)
     user = fac.user
-    db.session.delete(user)
-    db.session.commit()
-    return jsonify(message='Faculty deleted successfully')
+    try:
+        db.session.delete(user)  # cascades to faculty + subjects + timetable
+        db.session.commit()
+        return jsonify(message='Faculty deleted successfully')
+    except Exception as e:
+        db.session.rollback()
+        return jsonify(error=f'Failed to delete faculty: {str(e)}'), 500

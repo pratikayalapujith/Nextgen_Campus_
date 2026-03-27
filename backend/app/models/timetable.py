@@ -18,7 +18,7 @@ class TimetableEntry(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     department = db.relationship('Department', backref='timetable_entries')
-    attendance_records = db.relationship('AttendanceRecord', backref='timetable_entry', lazy='dynamic')
+    attendance_records = db.relationship('AttendanceRecord', backref='timetable_entry', lazy='dynamic', cascade='all, delete-orphan')
 
     DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 

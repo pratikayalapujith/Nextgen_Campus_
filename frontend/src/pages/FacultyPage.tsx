@@ -73,11 +73,13 @@ const FacultyPage: React.FC = () => {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this faculty member?')) return;
+    if (!confirm('Are you sure you want to delete this faculty member? This will also remove their subjects and timetable entries.')) return;
     try {
       await api.delete(`/faculty/${id}`);
       fetchData();
-    } catch (err) { console.error(err); }
+    } catch (err: any) {
+      alert(err.response?.data?.error || 'Failed to delete faculty');
+    }
   };
 
   if (loading) return <DashboardLayout title="Faculty"><LoadingSpinner /></DashboardLayout>;
